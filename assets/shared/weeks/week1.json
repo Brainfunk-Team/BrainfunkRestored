@@ -1,0 +1,45 @@
+{
+	"songs": [
+		[
+			"Prosthesis",
+			"dave",
+			[
+				6,
+				113,
+				253
+			]
+		],
+		[
+			"instability",
+			"dave-annoyed",
+			[
+				6,
+				113,
+				253
+			]
+		],
+		[
+			"dimensionalized",
+			"dave-angey",
+			[
+				255,
+				53,
+				113
+			]
+		]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "DaveHouse",
+	"difficulties": "",
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"storyName": "CHAPTER 1: DAVE's FUNKY BATTLE",
+	"weekName": "Week Dave",
+	"hideStoryMode": false,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}

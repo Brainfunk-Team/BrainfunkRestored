@@ -282,6 +282,10 @@ class PlayState extends MusicBeatState
 
 	private static var _lastLoadedModDirectory:String = '';
 	public static var nextReloadAll:Bool = false;
+
+	var nightColor:FlxColor = 0xFF878787;
+	public var sunsetColor:FlxColor = FlxColor.fromRGB(255, 143, 178);
+	
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
@@ -407,6 +411,8 @@ class PlayState extends MusicBeatState
 			case 'tank': new Tank();					//Week 7 - Ugh, Guns, Stress
 			case 'phillyStreets': new PhillyStreets(); 	//Weekend 1 - Darnell, Lit Up, 2Hot
 			case 'phillyBlazin': new PhillyBlazin();	//Weekend 1 - Blazin
+			case 'house': new House();
+			case 'farm': new Farm();
 		}
 
 		if(isPixelStage) introSoundsSuffix = '-pixel';
@@ -890,6 +896,21 @@ class PlayState extends MusicBeatState
 			total += section.sectionNotes.length;
 		}
 		return total;
+	}
+
+	public function getBackgroundColor(stage:String):FlxColor
+	{
+		var variantColor:FlxColor = FlxColor.WHITE;
+		switch (stage)
+		{
+			case 'bambiFarmNight' | 'daveHouse_night' | 'backyard' | 'bedroomNight':
+				variantColor = nightColor;
+			case 'bambiFarmSunset' | 'daveHouse_sunset':
+				variantColor = sunsetColor;
+			default:
+				variantColor = FlxColor.WHITE;
+		}
+		return variantColor;
 	}
 
 

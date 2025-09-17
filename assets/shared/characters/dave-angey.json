@@ -1,44 +1,44 @@
 {
 	"animations": [
 		{
+			"loop": false,
+			"offsets": [128, -1],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [13, 69],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [14, 48],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [70, 45],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "right",
+			"indices": []
+		},
+		{
 			"offsets": [0, 0],
 			"indices": [],
 			"fps": 24,
 			"anim": "idle",
 			"loop": false,
-			"name": "Idle"
-		},
-		{
-			"offsets": [18, 9],
-			"indices": [],
-			"fps": 24,
-			"anim": "singLEFT",
-			"loop": false,
-			"name": "left"
-		},
-		{
-			"offsets": [13, 6],
-			"indices": [],
-			"fps": 24,
-			"anim": "singDOWN",
-			"loop": false,
-			"name": "down"
-		},
-		{
-			"offsets": [5, 18],
-			"indices": [],
-			"fps": 24,
-			"anim": "singUP",
-			"loop": false,
-			"name": "up"
-		},
-		{
-			"offsets": [18, 9],
-			"indices": [],
-			"fps": 24,
-			"anim": "singRIGHT",
-			"loop": false,
-			"name": "right"
+			"name": "idle"
 		}
 	],
 	"vocals_file": "",
@@ -47,7 +47,7 @@
 	"position": [0, 0],
 	"healthicon": "dave-angey",
 	"flip_x": false,
-	"healthbar_colors": [103, 35, 32],
+	"healthbar_colors": [238, 149, 158],
 	"camera_position": [0, 0],
 	"sing_duration": 6.1,
 	"scale": 1,

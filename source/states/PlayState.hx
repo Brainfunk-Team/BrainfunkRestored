@@ -283,9 +283,6 @@ class PlayState extends MusicBeatState
 	private static var _lastLoadedModDirectory:String = '';
 	public static var nextReloadAll:Bool = false;
 
-	var nightColor:FlxColor = 0xFF878787;
-	public var sunsetColor:FlxColor = FlxColor.fromRGB(255, 143, 178);
-	
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
@@ -403,7 +400,7 @@ class PlayState extends MusicBeatState
 			case 'stage': new StageWeek1(); 			//Week 1
 			case 'spooky': new Spooky();				//Week 2
 			case 'philly': new Philly();				//Week 3
-			case 'limo': new Limo();					//Week 4
+			case 'limo': new Limo();	
 			case 'mall': new Mall();					//Week 5 - Cocoa, Eggnog
 			case 'mallEvil': new MallEvil();			//Week 5 - Winter Horrorland
 			case 'school': new School();				//Week 6 - Senpai, Roses
@@ -412,7 +409,8 @@ class PlayState extends MusicBeatState
 			case 'phillyStreets': new PhillyStreets(); 	//Weekend 1 - Darnell, Lit Up, 2Hot
 			case 'phillyBlazin': new PhillyBlazin();	//Weekend 1 - Blazin
 			case 'house': new House();
-			case 'farm': new Farm();
+			case 'house-sunset': new House();
+			case 'house-night': new House();
 		}
 
 		if(isPixelStage) introSoundsSuffix = '-pixel';
@@ -426,9 +424,8 @@ class PlayState extends MusicBeatState
 		var gfVers:String;
 		var gfOffset:Array<Float> = [0, 0];
 
-		#if CHARACTER_SELECT
 		var charAppend:String = "";
-
+#if CHARACTER_SELECT
 		switch (SONG.stage) //TODO: MAKE THIS EASIER TO SOFTCODED, COULD PROB BE DONE IN HSCRIPT, ANYWAY. AT LEAST MAKE AN HSCRIPT EXAMPLE?
 		{
 			case "mall", "mallEvil":
@@ -440,7 +437,7 @@ class PlayState extends MusicBeatState
 			case "school", "schoolEvil":
 				charAppend = "-pixel";
 		}
-		#end
+#end
 
 		if (!stageData.hide_girlfriend)
 		{
@@ -499,14 +496,14 @@ class PlayState extends MusicBeatState
 				gfGroup.y -= 225;
 
 			if (SONG.stage != "phillyStreets" && SONG.stage != "phillyBlazin")
-				aBot = new ABotSpeaker(gf.x - 50, gfGroup.y + 615); //this position has been the bane of my life
+				//NewCharacterSelectState = new ABotSpeaker(gf.x - 50, gfGroup.y + 615); //this position has been the bane of my life
 			
 			if (isAbot)
 			{
 				if (SONG.stage != "phillyStreets" && SONG.stage != "phillyBlazin")
 				{
 					updateABotEye(true);
-					gfGroup.add(aBot);
+					//gfGroup.add(aBot);
 				}
 			}
 
@@ -615,10 +612,13 @@ class PlayState extends MusicBeatState
 		add(uiGroup);
 		add(noteGroup);
 
+		uiData = UIData.getUIFile(SONG.ui);
+
 		Conductor.songPosition = -Conductor.crochet * 5 + Conductor.offset;
 		var showTime:Bool = (ClientPrefs.data.timeBarType != 'Disabled');
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
-		timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (uiData.font == null) uiData.font = "vcr.ttf";
+		timeTxt.setFormat(Paths.font(uiData.font + ".ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
 		timeTxt.borderSize = 2;
@@ -663,8 +663,6 @@ class PlayState extends MusicBeatState
 
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
 		moveCameraSection();
-
-		uiData = UIData.getUIFile(SONG.ui);
 
 		var healthBarImage:String = uiData.healthBarImage;
 		var healthBarX:Float = uiData.healthBarX;
@@ -714,7 +712,7 @@ class PlayState extends MusicBeatState
 		uiGroup.add(iconP2);
 
 		scoreTxt = new FlxText(0, healthBar.y + 40, FlxG.width, "", 20);
-		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font(uiData.font + ".ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.data.hideHud;
@@ -726,7 +724,7 @@ class PlayState extends MusicBeatState
 		for (textUI in uiData.text) {
 			uiText.push(new FlxText(textUI[0], textUI[1], FlxG.width, "", 20));
 			uiText[i].scrollFactor.set();
-			uiText[i].setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			uiText[i].setFormat(Paths.font(uiData.font + ".ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			uiText[i].scrollFactor.set();
 			uiText[i].borderSize = 1.25;
 			uiText[i].x = textUI[0];
@@ -740,7 +738,7 @@ class PlayState extends MusicBeatState
 		}
 
 		botplayTxt = new FlxText(400, healthBar.y - 90, FlxG.width - 800, "BOTPLAY", 32);
-		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.setFormat(Paths.font(uiData.font + ".ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled;
@@ -833,12 +831,7 @@ class PlayState extends MusicBeatState
 
 	function updateABotEye(finishInstantly:Bool = false)
 	{
-		if(PlayState.SONG.notes[Std.int(FlxMath.bound(curSection, 0, SONG.notes.length - 1))].mustHitSection == true)
-			aBot.lookRight();
-		else
-			aBot.lookLeft();
-
-		if(finishInstantly) aBot.eyes.anim.curFrame = aBot.eyes.anim.length - 1;
+		//if(finishInstantly) aBot.eyes.anim.curFrame = aBot.eyes.anim.length - 1;
 	}
 
 	public function charExists(character:String):Bool
@@ -896,21 +889,6 @@ class PlayState extends MusicBeatState
 			total += section.sectionNotes.length;
 		}
 		return total;
-	}
-
-	public function getBackgroundColor(stage:String):FlxColor
-	{
-		var variantColor:FlxColor = FlxColor.WHITE;
-		switch (stage)
-		{
-			case 'bambiFarmNight' | 'daveHouse_night' | 'backyard' | 'bedroomNight':
-				variantColor = nightColor;
-			case 'bambiFarmSunset' | 'daveHouse_sunset':
-				variantColor = sunsetColor;
-			default:
-				variantColor = FlxColor.WHITE;
-		}
-		return variantColor;
 	}
 
 
@@ -1540,10 +1518,6 @@ class PlayState extends MusicBeatState
 		#end
 		setOnScripts('songLength', songLength);
 		callOnScripts('onSongStart');
-
-		if (isAbot)
-			if (SONG.stage != "phillyStreets" && SONG.stage != "phillyBlazin")
-				aBot.snd = FlxG.sound.music;
 	}
 
 	private var noteTypes:Array<String> = [];

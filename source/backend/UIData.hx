@@ -36,6 +36,7 @@ typedef UIFile = {
     var healthBarScrollFactorY:Float;
     var healthBarVisible:Bool;
     var text:Array<Dynamic>;
+    @:optional var font:String;
 }
 
 class UIData {

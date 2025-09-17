@@ -3,3 +3,6 @@ house
 house-sunset
 house-night
 farm
+red-void
+green-void
+glitchy-void
